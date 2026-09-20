@@ -108,3 +108,45 @@ Weak stationarity กำหนดให้ mean คงที่ variance มี�
 </section>
 
 </section>
+
+<section class="glossary-group" id="group-risk-control">
+
+## Volatility และการหยุดความเสี่ยง
+
+<section class="glossary-term" id="conditional-volatility">
+
+### Conditional volatility — ความผันผวนภายใต้ข้อมูลที่มี
+
+ส่วนเบี่ยงเบนมาตรฐานแบบมีเงื่อนไขของตัวแปรในช่วงถัดไป ต้องระบุตัวแปร หน่วย ความถี่ และเวลาที่ใช้คำนวณ เช่น σ ของการเปลี่ยนแปลง spread ไม่ใช่ SD ของระดับ spread และไม่ใช่ขอบเขตราคาที่รับประกัน
+
+[ดูหน่วยของ Spread และ P&L](pairs-trading-volatility-stop.html#spread-volatility)
+
+</section>
+<section class="glossary-term" id="ewma">
+
+### EWMA — ค่าเฉลี่ยเคลื่อนที่แบบให้น้ำหนักลดลงเชิงเอ็กซ์โพเนนเชียล
+
+ในแบบจำลองความเสี่ยงที่ประมาณ mean เป็นศูนย์ ใช้ variance ใหม่ = λ × variance เดิม + (1−λ) × การเปลี่ยนแปลงล่าสุดยกกำลังสอง ค่าสำหรับวันนี้ต้องคำนวณด้วยข้อมูลก่อนวันนี้ ส่วน shock วันนี้อัปเดต forecast ของช่วงถัดไป
+
+[ดูสูตรและกรณี EUR/CHF](pairs-trading-volatility-stop.html#ewma-model)
+
+</section>
+<section class="glossary-term" id="structural-break">
+
+### Structural break — การเปลี่ยนโครงสร้างของกระบวนการ
+
+การเปลี่ยนพารามิเตอร์หรือความสัมพันธ์ที่อธิบายข้อมูล เช่น กรอบนโยบาย mean หรือ hedge relationship เดิมใช้ต่อไม่ได้ ความผันผวนสูงเพียงอย่างเดียวยังยืนยัน structural break ไม่ได้ และการเพิ่ม vol ในโมเดลไม่ทำให้ความสัมพันธ์เดิมกลับคืน
+
+[ดูการพักคู่และตรวจสมมติฐานใหม่](pairs-trading-volatility-stop.html#break-circuit)
+
+</section>
+<section class="glossary-term" id="risk-circuit-breaker">
+
+### Risk circuit breaker — กติกาพักการรับความเสี่ยง
+
+เงื่อนไขระดับคู่หรือบัญชีที่ให้หยุดเปิดใหม่และจัดการสถานะเดิมตามกติกา เช่น ขาดทุนสุทธิเกินงบ ข่าวเปลี่ยนนโยบาย หรือข้อมูลราคาไม่น่าเชื่อถือ ไม่เหมือน Stop ที่ใช้ปิดรอบเดียว และไม่รับประกันว่าจะ fill ภายในเพดานขาดทุน
+
+[ดูเงื่อนไขก่อนกลับมาเปิดใหม่](pairs-trading-volatility-stop.html#break-circuit)
+
+</section>
+</section>

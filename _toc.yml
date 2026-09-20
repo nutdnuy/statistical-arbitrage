@@ -11,5 +11,7 @@ chapters:
     title: 3 · Signals & Backtest
   - file: pairs-trading-ml
     title: 4 · Clustering, PCA & Prediction
+  - file: pairs-trading-volatility-stop
+    title: 5 · Cut loss & Volatility
   - file: glossary
     title: อภิธานศัพท์

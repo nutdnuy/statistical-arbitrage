@@ -149,6 +149,8 @@ Baseline แรกทำนายว่า residual ไม่เปลี่ย�
 
 </section>
 
+เมื่อคู่ไม่กลับตามสมมติฐาน ต่อที่ [ตอน 5 · Cut loss ด้วย Volatility Model](pairs-trading-volatility-stop.html)
+
 ## แหล่งข้อมูลและขอบเขตที่ตรวจแล้ว
 
 อ่าน PDF ที่ผู้ใช้ให้ครบ 146 หน้าและใช้เป็นโครงเรื่องการ hedge, clustering, PCA, backtesting และเหตุการณ์ตลาด ส่วน [Coursera Module 5](https://www.coursera.org/learn/machine-learning-trading-finance/home/module/5) ตรวจโครงหัวข้อผ่าน [syllabus สาธารณะ](https://www.coursera.org/learn/machine-learning-trading-finance) ไม่ได้เข้าชมวิดีโอหรือเฉลย lab ที่จำกัดสิทธิ์

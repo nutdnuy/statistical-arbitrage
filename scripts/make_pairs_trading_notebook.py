@@ -1,7 +1,7 @@
-"""Build and execute a self-contained notebook from the four canonical pages.
+"""Build and execute a self-contained notebook from the five canonical pages.
 
 Execution follows the repository's fresh-namespace/captured-stdout convention.
-Code uses numpy, scipy and statsmodels, with no network calls or market data.
+Code uses numpy, scipy and statsmodels, with no network calls; the risk chapter embeds archived ECB observations.
 """
 import base64
 import contextlib
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ("statistical-arbitrage", "pairs-trading-cointegration",
-         "pairs-trading-backtest", "pairs-trading-ml")
+         "pairs-trading-backtest", "pairs-trading-ml", "pairs-trading-volatility-stop")
 WEBSITE = "https://nutdnuy.github.io/statistical-arbitrage/"
 cells, namespace = [], {"__name__": "pairs_notebook"}
 
@@ -164,16 +164,42 @@ print("and retain unsuccessful outcomes. Fixed embedded charts describe the orig
 if __name__ == "__main__":
     markdown("""# Python lab · Statistical Arbitrage & Pairs Trading
 
-Notebook นี้รวมบทเรียนสี่ตอนจาก Markdown ต้นฉบับ พร้อมโค้ดที่รันตามลำดับได้และผลที่คำนวณแล้ว
+Notebook นี้รวมบทเรียนห้าตอนจาก Markdown ต้นฉบับ พร้อมโค้ดที่รันตามลำดับได้และผลที่คำนวณแล้ว
 การจำลองและโมเดลใช้ **NumPy, SciPy และ statsmodels** หากยังไม่มีให้ติดตั้งด้วย
 `python -m pip install numpy scipy statsmodels` ใน environment ที่เลือกเป็น kernel ก่อนกด Run All
 ไม่ต้องดาวน์โหลดข้อมูลตลาด ไม่ต้องมี API key และไม่ต้องเปิดไฟล์โค้ดอื่น
 
-กราฟทั้งสิบเป็น snapshot ของพารามิเตอร์และ seed ที่ระบุ ฝังอยู่ในไฟล์แล้ว เมื่อแก้พารามิเตอร์
+กราฟทั้งสิบสามเป็น snapshot ของพารามิเตอร์และ seed ที่ระบุ ฝังอยู่ในไฟล์แล้ว เมื่อแก้พารามิเตอร์
 ผลจากโค้ดจะเปลี่ยน แต่ภาพ snapshot จะไม่เปลี่ยนตาม ห้องทดลอง Backtest แบบมีสถานะและต้นทุน
 อยู่ในเว็บไซต์ ตัวอย่าง Python เน้นบัญชีกำไรสองขา การคัดคู่ และการประเมิน forecast
-ตัวเลขทั้งหมดเป็นข้อมูลสมมติ ไม่ใช่ผลการลงทุนในตลาดจริง
+ตัวทดลองซื้อขายใช้ข้อมูลสมมติ ไม่ใช่ผลการลงทุนในตลาดจริง ส่วนกรณี EUR/CHF ในตอน 5
+ใช้ข้อมูลอ้างอิง ECB จริงที่ฝังไว้ พร้อมแยกการคำนวณ returns และ EWMA ของผู้เขียนออกจากข้อมูลต้นฉบับ
 """)
+    # Embed the small historical sample so downloaded notebooks need no network.
+    import csv
+    fx = list(csv.DictReader((ROOT / "data/ecb-chf-eur-2014-2015.csv").open(newline="")))
+    SNIPPETS[("pairs-trading-volatility-stop", "snb-2015")] = (
+        "# Source: ECB statistics; unmodified observed rates, CHF per EUR.\n"
+        + "fx_rows = " + repr([(r["TIME_PERIOD"], float(r["OBS_VALUE"])) for r in fx]) + "\n"
+        + "fx_dates = [d for d, value in fx_rows]\n"
+        + "fx_values = np.array([value for d, value in fx_rows])\n"
+        + "fx_returns = np.r_[np.nan, fx_values[1:] / fx_values[:-1] - 1]\n"
+        + "fx_event = fx_dates.index('2015-01-15')\n"
+        + "assert fx_values[fx_event-1] == 1.201 and fx_values[fx_event] == 1.028\n"
+        + "print(f'ECB observations: {len(fx_rows)}; {fx_dates[0]} to {fx_dates[-1]}')\n"
+        + "print(f'Author-calculated event change: {100*fx_returns[fx_event]:.6f}%')\n"
+        + "print('Reference observations, not executable prices or intraday extremes.')")
+    SNIPPETS[("pairs-trading-volatility-stop", "ewma-model")] = """# Forecast i excludes the change observed at i. Zero-mean approximation.
+fx_sigma = np.full(len(fx_returns), np.nan)
+fx_variance = np.mean(fx_returns[1:21]**2)
+for i in range(21, len(fx_returns)):
+    fx_sigma[i] = np.sqrt(fx_variance)
+    fx_variance = .94*fx_variance + .06*fx_returns[i]**2
+print(f'Before 15 Jan: sigma = {100*fx_sigma[fx_event]:.6f}%')
+print(f'After 15 Jan, forecast for next observation: {100*fx_sigma[fx_event+1]:.6f}%')
+assert np.isclose(fx_sigma[fx_event], 0.000678638203673254)
+assert np.isclose(fx_sigma[fx_event+1], 0.03529020793125892)
+print('No annualization; the surprise is not interpreted as a Normal-tail probability.')"""
     helper = (ROOT / "scripts/pairs_trading_research.py").read_text()
     helper = helper.split('\nif __name__ == "__main__":', 1)[0]
     code(helper + '\nprint("Loaded the self-contained synthetic model, fitting, selection and leakage checks.")')
@@ -197,7 +223,7 @@ Notebook นี้รวมบทเรียนสี่ตอนจาก Mark
         cell["id"] = f"pairs-{index:03d}"
     attachments = {name for cell in cells for name in cell.get("attachments", {})}
     expected = {path.name for path in (ROOT / "assets/images").glob("pairs-*.svg")}
-    assert len(expected) == 10 and expected <= attachments
+    assert len(expected) == 13 and expected <= attachments
     # Confirm that model results in the standalone notebook equal the saved evidence.
     saved = json.loads((ROOT / "data/pairs-ml-results.json").read_text())
     assert namespace["result"]["summary"]["metrics"] == saved["metrics"]
@@ -208,7 +234,11 @@ Notebook นี้รวมบทเรียนสี่ตอนจาก Mark
         "sources": sources,
         "execution": {"method": "All code cells executed in one fresh Python namespace with captured stdout",
                       "generator": "scripts/make_pairs_trading_notebook.py", "errors": 0},
-        "software_versions": saved["software_versions"], "synthetic_data": True,
+        "software_versions": saved["software_versions"],
+        "contains_synthetic_data": True, "contains_historical_reference_data": True,
+        "historical_sources": [{"source": "ECB statistics", "series": "EXR.D.CHF.EUR.SP00.A",
+            "path": "data/ecb-chf-eur-2014-2015.csv",
+            "sha256": hashlib.sha256((ROOT / "data/ecb-chf-eur-2014-2015.csv").read_bytes()).hexdigest()}],
     }}
     import nbformat
     nbformat.validate(nbformat.from_dict(notebook))

@@ -29,10 +29,11 @@ Regenerate changed computations and their outputs in this order:
 ```sh
 python scripts/pairs_trading_research.py
 python scripts/make_pairs_trading_figures.py
+python scripts/make_vol_stop_figures.py
 python scripts/make_pairs_trading_notebook.py
 ```
 
-The research generator updates `data/pairs-ml-results.json`. The figure generator creates the ten `assets/images/pairs-*.svg` charts. The Notebook generator reads all four Markdown lessons, embeds the local figures, executes its code cells and writes `notebooks/pairs-trading.ipynb`. It also validates the research results and records source hashes. Keep personal Notebook experiments under a different filename.
+The research generator updates `data/pairs-ml-results.json`. The base figure generator creates ten `assets/images/pairs-*.svg` charts. The Notebook generator reads all five Markdown lessons, embeds the local figures, executes its code cells and writes `notebooks/pairs-trading.ipynb`. The separate risk figure generator creates three more figures from the archived ECB CSV and the JavaScript stop ledger. Keep the raw ECB CSV and metadata unchanged; label derived returns and EWMA as author calculations. The Notebook generator also validates the research results and records lesson and ECB source hashes. Keep personal Notebook experiments under a different filename.
 
 After a prose-only lesson change, regenerate the Notebook so its text and source hashes match. After a formula or simulation change, regenerate all affected outputs and run the numerical and browser checks. The Python research uses a separate synthetic sample from the browser Backtest; their seeds, lengths and purpose are recorded in the provenance file.
 

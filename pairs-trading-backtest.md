@@ -131,6 +131,8 @@ Backtest ต้องจัดเวลาให้ทุกอย่างเ�
 
 </section>
 
+สำหรับการวาง Stop ตามความผันผวนและกรณีคู่ฉีกออก ต่อที่ [ตอน 5 · Cut loss ด้วย Volatility Model](pairs-trading-volatility-stop.html)
+
 ## แหล่งข้อมูลและโค้ด
 
 เรียบเรียงใหม่จาก PDF ที่ผู้ใช้ให้ หน้า 86–146 และข้อจำกัด look-ahead ที่ [AlgoAddict ตอนประยุกต์ใช้](https://algoaddict.wordpress.com/2019/06/22/basic-pair-trading-2-การประยุกต์ใช้-cointegration/) กล่าวไว้ ดู [source corrections](data/pairs-trading-provenance.json), [โค้ดตัวทดลอง](https://github.com/nutdnuy/statistical-arbitrage/blob/main/src/pairs-trading.mjs) และ [Notebook การคัดคู่และทำนาย](notebooks/pairs-trading.ipynb)

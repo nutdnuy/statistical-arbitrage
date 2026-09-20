@@ -8,8 +8,8 @@ description: ซีรีส์ Pairs Trading ภาษาไทย จากพ
 <div class="welcome-hero">
 <p class="welcome-kicker">QuantCorner · Pairs Trading</p>
 <div class="welcome-lead">ศึกษาความสัมพันธ์ของราคา<br>สร้างกลยุทธ์ Pairs Trading</div>
-<p class="welcome-summary">เริ่มจากกำไรขาดทุนของพอร์ตสองขา ตรวจว่าราคามีแนวโน้มร่วมกันหรือไม่ แล้วทดสอบกติกาซื้อขายและโมเดลทำนายด้วยข้อมูลที่แยกตามเวลา</p>
-<div class="welcome-actions"><a class="button primary" href="statistical-arbitrage.html">เริ่มจากตอนแรก <span aria-hidden="true">→</span></a><a class="welcome-text-link" href="#lessons">ดูทั้ง 4 ตอน <span aria-hidden="true">↓</span></a></div>
+<p class="welcome-summary">เริ่มจากกำไรขาดทุนของพอร์ตสองขา ตรวจว่าราคามีแนวโน้มร่วมกันหรือไม่ แล้วทดสอบกติกาซื้อขาย โมเดลทำนาย และการหยุดขาดทุนเมื่อความสัมพันธ์เปลี่ยน</p>
+<div class="welcome-actions"><a class="button primary" href="statistical-arbitrage.html">เริ่มจากตอนแรก <span aria-hidden="true">→</span></a><a class="welcome-text-link" href="#lessons">ดูทั้ง 5 ตอน <span aria-hidden="true">↓</span></a></div>
 <p class="welcome-format">กราฟจากการคำนวณ · ห้องทดลองปรับค่า · Python Notebook</p>
 </div>
 
@@ -17,11 +17,11 @@ description: ซีรีส์ Pairs Trading ภาษาไทย จากพ
 
 <div class="welcome-preparation">
 <h3>ก่อนเริ่ม</h3>
-<p>ควรคุ้นกับผลตอบแทน ค่าเฉลี่ย และส่วนเบี่ยงเบนมาตรฐาน ตัวอย่างและผล Backtest ในซีรีส์นี้ใช้ข้อมูลจำลองเพื่ออธิบายวิธีคำนวณ ผลที่ได้จึงไม่ได้แสดงว่ากลยุทธ์ทำกำไรในตลาดจริง</p>
+<p>ควรคุ้นกับผลตอบแทน ค่าเฉลี่ย และส่วนเบี่ยงเบนมาตรฐาน ตัวอย่างและผล Backtest ในซีรีส์นี้ใช้ข้อมูลจำลองเพื่ออธิบายวิธีคำนวณ ผลที่ได้จึงไม่ได้แสดงว่ากลยุทธ์ทำกำไรในตลาดจริง ส่วนกรณี EUR/CHF ในตอน 5 ใช้อัตราอ้างอิงจริงของ ECB แยกจากตัวทดลอง</p>
 <a class="welcome-text-link" href="glossary.html">เปิดอภิธานศัพท์ประกอบการอ่าน <span aria-hidden="true">→</span></a>
 </div>
 
-<h2 id="lessons">บทเรียน 4 ตอน</h2>
+<h2 id="lessons">บทเรียน 5 ตอน</h2>
 
 อ่านตามลำดับเพื่อเชื่อมความหมายของสถานะ Spread สัญญาณ และผลการทดสอบ แต่ละตอนมีสมมติฐานและแหล่งอ้างอิงกำกับ
 
@@ -58,11 +58,19 @@ description: ซีรีส์ Pairs Trading ภาษาไทย จากพ
 <p class="welcome-topics">Clustering · PCA · Ridge · Python Notebook</p>
 <a class="welcome-text-link" href="pairs-trading-ml.html">อ่านตอนนี้ →</a></div>
 </article>
+<article class="welcome-lesson">
+<span class="welcome-lesson-number" aria-hidden="true">05</span>
+<div><p class="welcome-lesson-label">เมื่อคู่ฉีกออกจากกัน</p>
+<h3><a href="pairs-trading-volatility-stop.html">Pairs Trading 5 · Cut loss ด้วย Volatility Model</a></h3>
+<p>วางขนาดสถานะและ Stop ด้วย EWMA พร้อมศึกษาการเปลี่ยนนโยบายค่าเงิน</p>
+<p class="welcome-topics">EWMA · Risk budget · Policy shock · Structural break</p>
+<a class="welcome-text-link" href="pairs-trading-volatility-stop.html">อ่านตอนนี้ →</a></div>
+</article>
 </div>
 
 
 <div class="welcome-resources">
 <h3>ทดลองต่อด้วย Python</h3>
-<p>Notebook รวมทั้งสี่ตอน พร้อมโค้ดและผลที่คำนวณแล้ว ลองเปลี่ยนสมมติฐานทีละข้อแล้วเปรียบเทียบผลกับบทเรียน</p>
+<p>Notebook รวมทั้งห้าตอน พร้อมโค้ดและผลที่คำนวณแล้ว ลองเปลี่ยนสมมติฐานทีละข้อแล้วเปรียบเทียบผลกับบทเรียน</p>
 <div class="welcome-download"><a href="notebooks/pairs-trading.ipynb" download>ดาวน์โหลด Pairs Trading Notebook</a><a href="statistical-arbitrage.md" download>ดาวน์โหลด Markdown ตอนแรก</a></div>
 </div>

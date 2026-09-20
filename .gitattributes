@@ -1,2 +1,5 @@
 # Preserve the upstream KaTeX distribution verbatim, including generated whitespace.
 assets/katex/** -whitespace
+
+# Preserve the archived ECB response and its original CRLF line endings.
+data/ecb-chf-eur-2014-2015.csv -text whitespace=cr-at-eol

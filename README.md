@@ -1,6 +1,6 @@
 # Statistical Arbitrage
 
-A standalone QuantCorner series in Thai on Pairs Trading, with four lessons, ten computed figures, three interactive labs, and a reproducible Python Notebook. All strategy examples use hypothetical data.
+A standalone QuantCorner series in Thai on Pairs Trading, with five lessons, thirteen figures, four interactive labs, and a reproducible Python Notebook. Strategy simulations use hypothetical data; chapter 5 separately includes observed ECB EUR/CHF reference rates.
 
 - Website: https://nutdnuy.github.io/statistical-arbitrage/
 - Repository: https://github.com/nutdnuy/statistical-arbitrage
@@ -30,6 +30,7 @@ Open http://localhost:8765/. With that preview running, use `npm run check:site`
 | `pairs-trading-cointegration.md` | Correlation, cointegration and residual spread |
 | `pairs-trading-backtest.md` | Signals, fills, costs and performance |
 | `pairs-trading-ml.md` | Clustering, PCA and prediction |
+| `pairs-trading-volatility-stop.md` | EWMA, stop execution and FX policy changes |
 | `glossary.md` | Shared series terminology |
 
 `src/pairs-trading.mjs` contains the browser calculations; `src/pairs-trading.jsx` contains the labs. `scripts/` contains the Python research, figure and Notebook generators. `data/pairs-trading-provenance.json` records source access, assumptions, corrections and migration context.

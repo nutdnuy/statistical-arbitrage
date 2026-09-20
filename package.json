@@ -5,9 +5,9 @@
   "scripts": {
     "build": "node build.cjs",
     "build:pages": "npm run build && node scripts/export-pages.cjs",
-    "test": "node qa/pairs-trading-checks.mjs",
+    "test": "node qa/pairs-trading-checks.mjs && node qa/vol-stop-checks.mjs",
     "dev": "node serve.cjs",
-    "check:site": "node qa/pairs-trading-page-checks.cjs"
+    "check:site": "node qa/pairs-trading-page-checks.cjs && node qa/vol-stop-page-checks.cjs"
   },
   "engines": {
     "node": ">=22"
