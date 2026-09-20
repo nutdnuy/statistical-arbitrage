@@ -59,6 +59,44 @@ $$
 
 </section>
 
+<section id="two-counterexamples">
+
+## สองภาพ: Correlation กับ Cointegration แยกกันได้
+
+ในสองรูปนี้ **correlation วัดจากผลต่างหนึ่งช่วง** \(\Delta A_t=A_t-A_{t-1}\) และ \(\Delta B_t\) ไม่ใช่ correlation ของระดับราคา และไม่ใช่เปอร์เซ็นต์ผลตอบแทน ทั้งคู่ใช้ข้อมูลจำลอง 500 จุด พร้อมแสดงระดับอนุกรมด้านบน กราฟกระจายของผลต่างด้านล่างซ้าย และ spread ด้านล่างขวา
+
+### Cointegration without correlation
+
+ให้ \(X_t\) เป็น random walk ที่ช็อกแต่ละช่วงมี variance 1 และ \(u_t\) เป็น white noise อิสระจาก X มี mean 0 และ variance 0.5 แล้วกำหนด
+
+$$
+A_t=X_t+u_t,\qquad B_t=X_t-u_t.
+$$
+
+ทั้ง A และ B มีแนวโน้มสุ่มร่วมกัน แต่ \(A_t-B_t=2u_t\) เป็น stationary จึงมี cointegration ขณะที่ \(\Delta A_t=\Delta X_t+\Delta u_t\) และ \(\Delta B_t=\Delta X_t-\Delta u_t\) มี covariance เท่ากับ \(1-2(0.5)=0\) ดังนั้น correlation ของผลต่างหนึ่งช่วงตามแบบจำลองจึงเป็นศูนย์ ค่าที่วัดจากตัวอย่างจำนวนจำกัดอาจไม่เท่ากับศูนย์พอดี
+
+<figure class="pairs-figure">
+<p class="pairs-chart-hint">เลื่อนกราฟแนวนอนบนจอเล็ก หรือแตะกราฟเพื่อเปิดขนาดเต็ม</p>
+<div class="pairs-chart-scroll" tabindex="0" role="region" aria-label="Cointegration without correlation: ผลต่างหนึ่งช่วงกระจายโดยไม่มีความสัมพันธ์เชิงเส้นตามแบบจำลอง แต่ spread เท่ากับสองเท่าของ white noise และ stationary; เลื่อนแนวนอนเพื่ออ่านกราฟ"><a href="assets/images/pairs-cointegration-without-correlation.svg" aria-label="เปิดกราฟขนาดเต็ม: Cointegration without correlation: ผลต่างหนึ่งช่วงกระจายโดยไม่มีความสัมพันธ์เชิงเส้นตามแบบจำลอง แต่ spread เท่ากับสองเท่าของ white noise และ stationary"><img src="assets/images/pairs-cointegration-without-correlation.svg" alt="Cointegration without correlation: ผลต่างหนึ่งช่วงกระจายโดยไม่มีความสัมพันธ์เชิงเส้นตามแบบจำลอง แต่ spread เท่ากับสองเท่าของ white noise และ stationary" loading="lazy"></a></div>
+<figcaption>ข้อมูลจำลอง · correlation ของผลต่างหนึ่งช่วง: ค่าตามแบบจำลอง 0; ค่าตัวอย่างคำนวณจริงอยู่ในภาพ · ระดับ A และ B ยังมีแนวโน้มร่วมกัน คำว่า without correlation จึงไม่ได้หมายถึงระดับอนุกรมทุกแบบ</figcaption>
+</figure>
+
+### Correlation without cointegration
+
+กลับมาที่ \(A_t=X_t+0.2Y_t\) และ \(B_t=X_t\) โดย X กับ Y เป็น random walk อิสระ ช็อกของทั้งสองมี variance 1 ผลต่างหนึ่งช่วงมี correlation \(1/\sqrt{1.04}\approx0.981\) แต่ spread \(A_t-B_t=0.2Y_t\) ไม่ stationary เมื่อเริ่ม \(Y_0=0\) จะมี variance เท่ากับ \(0.04t\)
+
+แม้เปลี่ยน hedge ratio เป็น h ก็ยังเหลือ \(A_t-hB_t=(1-h)X_t+0.2Y_t\) ไม่มีค่าคงที่ h ที่หักแนวโน้มสุ่มอิสระทั้งสองออกได้พร้อมกัน จึงไม่มี cointegration ในแบบจำลองนี้
+
+<figure class="pairs-figure">
+<p class="pairs-chart-hint">เลื่อนกราฟแนวนอนบนจอเล็ก หรือแตะกราฟเพื่อเปิดขนาดเต็ม</p>
+<div class="pairs-chart-scroll" tabindex="0" role="region" aria-label="Correlation without cointegration: ผลต่างหนึ่งช่วงสัมพันธ์กันสูง แต่ spread เท่ากับ random walk อิสระคูณ 0.2 และไม่ stationary; เลื่อนแนวนอนเพื่ออ่านกราฟ"><a href="assets/images/pairs-correlation-without-cointegration.svg" aria-label="เปิดกราฟขนาดเต็ม: Correlation without cointegration: ผลต่างหนึ่งช่วงสัมพันธ์กันสูง แต่ spread เท่ากับ random walk อิสระคูณ 0.2 และไม่ stationary"><img src="assets/images/pairs-correlation-without-cointegration.svg" alt="Correlation without cointegration: ผลต่างหนึ่งช่วงสัมพันธ์กันสูง แต่ spread เท่ากับ random walk อิสระคูณ 0.2 และไม่ stationary" loading="lazy"></a></div>
+<figcaption>ข้อมูลจำลอง · correlation ของผลต่างหนึ่งช่วงตามแบบจำลองประมาณ 0.981 · เส้น spread อาจกลับผ่านศูนย์ในบางช่วงได้ แต่ variance ของกระบวนการยังเพิ่มตามเวลา</figcaption>
+</figure>
+
+สถานะ cointegration ของสองตัวอย่างนี้ทราบจากสมการที่ใช้สร้างข้อมูล ไม่ได้ตัดสินจากหน้าตากราฟหรือการผ่านเกณฑ์ correlation ดู [seed สมมติฐาน และค่าที่คำนวณได้](data/pairs-cointegration-counterexamples.json)
+
+</section>
+
 <section id="engle-granger">
 
 ## ประมาณความสัมพันธ์โดยใช้เฉพาะข้อมูลฝึก

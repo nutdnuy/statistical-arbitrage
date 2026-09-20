@@ -169,7 +169,7 @@ Notebook นี้รวมบทเรียนสี่ตอนจาก Mark
 `python -m pip install numpy scipy statsmodels` ใน environment ที่เลือกเป็น kernel ก่อนกด Run All
 ไม่ต้องดาวน์โหลดข้อมูลตลาด ไม่ต้องมี API key และไม่ต้องเปิดไฟล์โค้ดอื่น
 
-ภาพทั้งแปดเป็น snapshot ของพารามิเตอร์และ seed ที่ระบุ ฝังอยู่ในไฟล์แล้ว เมื่อแก้พารามิเตอร์
+กราฟทั้งสิบเป็น snapshot ของพารามิเตอร์และ seed ที่ระบุ ฝังอยู่ในไฟล์แล้ว เมื่อแก้พารามิเตอร์
 ผลจากโค้ดจะเปลี่ยน แต่ภาพ snapshot จะไม่เปลี่ยนตาม ห้องทดลอง Backtest แบบมีสถานะและต้นทุน
 อยู่ในเว็บไซต์ ตัวอย่าง Python เน้นบัญชีกำไรสองขา การคัดคู่ และการประเมิน forecast
 ตัวเลขทั้งหมดเป็นข้อมูลสมมติ ไม่ใช่ผลการลงทุนในตลาดจริง
@@ -197,7 +197,7 @@ Notebook นี้รวมบทเรียนสี่ตอนจาก Mark
         cell["id"] = f"pairs-{index:03d}"
     attachments = {name for cell in cells for name in cell.get("attachments", {})}
     expected = {path.name for path in (ROOT / "assets/images").glob("pairs-*.svg")}
-    assert len(expected) == 8 and expected <= attachments
+    assert len(expected) == 10 and expected <= attachments
     # Confirm that model results in the standalone notebook equal the saved evidence.
     saved = json.loads((ROOT / "data/pairs-ml-results.json").read_text())
     assert namespace["result"]["summary"]["metrics"] == saved["metrics"]

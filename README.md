@@ -1,6 +1,6 @@
 # Statistical Arbitrage
 
-A standalone QuantCorner series in Thai on Pairs Trading, with four lessons, eight computed figures, three interactive labs, and a reproducible Python Notebook. All strategy examples use hypothetical data.
+A standalone QuantCorner series in Thai on Pairs Trading, with four lessons, ten computed figures, three interactive labs, and a reproducible Python Notebook. All strategy examples use hypothetical data.
 
 - Website: https://nutdnuy.github.io/statistical-arbitrage/
 - Repository: https://github.com/nutdnuy/statistical-arbitrage

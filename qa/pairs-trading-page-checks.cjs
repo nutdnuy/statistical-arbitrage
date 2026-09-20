@@ -7,7 +7,7 @@ const { pathToFileURL } = require('node:url');
 const root = path.resolve(__dirname, '..'), base = process.env.QA_BASE || 'http://127.0.0.1:8765';
 const lessons = [
   { slug: 'statistical-arbitrage', lab: 'pair-hedge-lab', charts: 1, svg: 1, photo: 1 },
-  { slug: 'pairs-trading-cointegration', lab: 'pair-cointegration-lab', charts: 2, svg: 1, photo: 0 },
+  { slug: 'pairs-trading-cointegration', lab: 'pair-cointegration-lab', charts: 2, svg: 3, photo: 0 },
   { slug: 'pairs-trading-backtest', lab: 'pair-backtest-lab', charts: 2, svg: 1, photo: 0 },
   { slug: 'pairs-trading-ml', lab: null, charts: 0, svg: 5, photo: 0 },
 ];
@@ -205,7 +205,7 @@ const fmt = value => value.toLocaleString('en-US', { minimumFractionDigits: 2, m
 
     assert.deepEqual(errors, []); report.status = 'passed';
     fs.writeFileSync(path.join(__dirname, 'pairs-trading-page-report.json'), JSON.stringify(report, null, 2));
-    console.log('Pairs pages passed: 24 responsive/theme states, 3 labs/5 charts, 8 SVGs/1 photo, keyboard and ledger CSV, 6 glossary terms/search, offline assets and executed notebook.');
+    console.log('Pairs pages passed: 24 responsive/theme states, 3 labs/5 charts, 10 SVGs/1 photo, keyboard and ledger CSV, 6 glossary terms/search, offline assets and executed notebook.');
   } finally {
     fs.writeFileSync(path.join(__dirname, 'pairs-trading-page-report.json'), JSON.stringify(report, null, 2));
     await browser.close();

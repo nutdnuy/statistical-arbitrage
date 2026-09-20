@@ -1,9 +1,10 @@
-"""Render eight original computational charts; no market observations.
+"""Render ten original computational charts; no market observations.
 
 Requires numpy, scipy, statsmodels and matplotlib. SVG text stays editable.
 All evidence is synthetic; chart titles, scales and numbers come from the code.
 """
 import os
+import json
 import base64
 from pathlib import Path
 
@@ -95,6 +96,67 @@ ax.set_ylabel("Return / P&L measure (%)")
 ax.legend(loc="upper center", bbox_to_anchor=(.5, 1.12), ncol=3, fontsize=12.5, frameon=False)
 save(fig, "pairs-long-short.svg", "Equal-dollar long-short scenario returns. A returns +5%, +15%, -5%; B asset returns -5%, +5%, -15%. Pair P&L divided by 20,000 dollars gross is +5% in all three examples. These are not returns on account equity.",
      "Hypothetical one-period scenarios | Excludes fees, borrow costs and dividends\nA positive B asset return loses money on the short leg; account-equity return uses a different denominator.")
+
+
+# Analytic counterexamples: correlation is measured on first differences,
+# not on nonstationary levels or percentage returns. No seed selection or fitting.
+example_seed, example_n = 20260921, 500
+example_rng = np.random.default_rng(example_seed)
+x_example = np.r_[100., 100. + np.cumsum(example_rng.normal(size=example_n - 1))]
+u_example = example_rng.normal(scale=np.sqrt(.5), size=example_n)
+y_example = np.r_[0., np.cumsum(example_rng.normal(size=example_n - 1))]
+examples = [
+    ('cointegration-without-correlation', 'Cointegration without correlation',
+     x_example + u_example, x_example - u_example, 2 * u_example, 0.,
+     'A = X + u; B = X - u | X: random walk; u: independent white noise',
+     'Stationary spread: A - B = 2u',
+     'Var(dX) = 1; Var(u) = 0.5. Cov(dA, dB) = 1 - 2(0.5) = 0.'),
+    ('correlation-without-cointegration', 'Correlation without cointegration',
+     x_example + .2 * y_example, x_example, .2 * y_example, 1 / np.sqrt(1.04),
+     'A = X + 0.2Y; B = X | X and Y: independent random walks',
+     'Nonstationary spread: A - B = 0.2Y',
+     'Var(dX) = Var(dY) = 1. Var(A - B) = 0.04t; no fixed hedge removes Y.'),
+]
+example_evidence = {'seed': example_seed, 'observations': example_n,
+                    'units': 'Synthetic level units; first differences, not percentage returns',
+                    'method': 'Known constructions; no fitted hedge, p-value or seed search', 'examples': []}
+for slug, title, a, b, spread, population_rho, construction, residual_title, explanation in examples:
+    np.testing.assert_allclose(a - b, spread, atol=1e-12)
+    da, db = np.diff(a), np.diff(b)
+    sample_rho = float(np.corrcoef(da, db)[0, 1])
+    fig = plt.figure(figsize=(11.2, 9.6))
+    gs = fig.add_gridspec(2, 2, left=.095, right=.965, top=.79, bottom=.21,
+                          hspace=.65, wspace=.34, height_ratios=[1, 1])
+    levels, scatter, residual = fig.add_subplot(gs[0, :]), fig.add_subplot(gs[1, 0]), fig.add_subplot(gs[1, 1])
+    fig.text(.045, .955, title, fontsize=25, weight='bold', va='top')
+    fig.text(.045, .902, construction, fontsize=14, color=GRAY, va='top')
+    fig.text(.045, .867, f'First-difference correlation: population = {population_rho:.3f}; sample = {sample_rho:+.3f}',
+             fontsize=15, color=INK, va='top')
+    for ax in (levels, scatter, residual):
+        ax.set_axisbelow(True); ax.grid(axis='y', color=GRID, linewidth=.8)
+    levels.plot(a, color=PURPLE, lw=1.5, label='A')
+    levels.plot(b, color=TEAL, lw=1.5, ls='--', label='B')
+    levels.set(xlim=(0, example_n - 1), ylabel='Synthetic level', xlabel='Simulated step')
+    levels.legend(loc='upper left', frameon=False, ncol=2, fontsize=13)
+    scatter.scatter(db, da, s=13, alpha=.5, color=PURPLE, edgecolors='none')
+    scatter.axhline(0, color=GRAY, lw=.8); scatter.axvline(0, color=GRAY, lw=.8)
+    scatter.set(xlabel='Change in B (level units)', ylabel='Change in A (level units)')
+    lim = np.ceil(max(np.max(np.abs(da)), np.max(np.abs(db))))
+    scatter.set_xlim(-lim, lim); scatter.set_ylim(-lim, lim)
+    scatter.set_title('One-step changes', loc='left', fontsize=16)
+    residual.plot(spread, color=TEAL, lw=1.4)
+    residual.axhline(0, color=GRAY, lw=1, ls='--')
+    residual.set(xlim=(0, example_n - 1), xlabel='Simulated step', ylabel='A - B (level units)')
+    residual.set_title(residual_title.replace(': ', ':\n'), loc='left', fontsize=16)
+    save(fig, f'pairs-{slug}.svg',
+         f'{title}. {construction}. First-difference correlation: population {population_rho:.6f}, sample {sample_rho:.6f}. {residual_title}. {explanation} Synthetic observations, not market prices; stationarity follows from construction, not visual inspection.',
+         f'Hypothetical simulation | Seed {example_seed} | 500 levels / 499 one-step changes\n{explanation}\nCorrelation here is not price-level correlation or percentage-return correlation.')
+    example_evidence['examples'].append({'file': f'assets/images/pairs-{slug}.svg',
+        'construction': construction, 'population_first_difference_correlation': population_rho,
+        'sample_first_difference_correlation': sample_rho, 'spread': residual_title,
+        'explanation': explanation})
+(ROOT / 'data/pairs-cointegration-counterexamples.json').write_text(
+    json.dumps(example_evidence, indent=2) + '\n')
 
 
 # Keep high return correlation in both cases while changing residual integration.
@@ -278,4 +340,4 @@ axes[1].grid(axis="y", visible=False)
 axes[1].invert_yaxis()
 save(fig, "pairs-ml-predictions.svg", "Held-out five-day residual forecasts and computed test mean absolute errors. Ridge MAE is 1.134352 dollars, zero-change MAE 1.317785 dollars, and training-estimated AR(1) MAE 1.103526 dollars. Alpha 100 was chosen using validation MSE only; no models were refitted on validation. This is forecast evaluation, not trading profitability.",
      f"Synthetic AR(1) pair | Seed {SEED} | Ridge alpha = 100 (validation MSE selection only)\nThe data-generating process favors AR(1). Forecast error excludes execution, costs and portfolio P&L.")
-print(f"Generated 8 SVG charts in {OUT}; inspection PNGs: {PREVIEWS}")
+print(f"Generated 10 SVG charts in {OUT}; inspection PNGs: {PREVIEWS}")

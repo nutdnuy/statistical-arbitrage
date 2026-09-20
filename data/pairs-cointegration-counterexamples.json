@@ -1,0 +1,24 @@
+{
+  "seed": 20260921,
+  "observations": 500,
+  "units": "Synthetic level units; first differences, not percentage returns",
+  "method": "Known constructions; no fitted hedge, p-value or seed search",
+  "examples": [
+    {
+      "file": "assets/images/pairs-cointegration-without-correlation.svg",
+      "construction": "A = X + u; B = X - u | X: random walk; u: independent white noise",
+      "population_first_difference_correlation": 0.0,
+      "sample_first_difference_correlation": -0.04742496319508465,
+      "spread": "Stationary spread: A - B = 2u",
+      "explanation": "Var(dX) = 1; Var(u) = 0.5. Cov(dA, dB) = 1 - 2(0.5) = 0."
+    },
+    {
+      "file": "assets/images/pairs-correlation-without-cointegration.svg",
+      "construction": "A = X + 0.2Y; B = X | X and Y: independent random walks",
+      "population_first_difference_correlation": 0.9805806756909201,
+      "sample_first_difference_correlation": 0.9797652609527159,
+      "spread": "Nonstationary spread: A - B = 0.2Y",
+      "explanation": "Var(dX) = Var(dY) = 1. Var(A - B) = 0.04t; no fixed hedge removes Y."
+    }
+  ]
+}
