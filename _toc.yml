@@ -1,0 +1,15 @@
+format: jb-book
+root: intro
+options:
+  numbered: false
+chapters:
+  - file: statistical-arbitrage
+    title: 1 · เริ่มจาก Pairs Trading
+  - file: pairs-trading-cointegration
+    title: 2 · Cointegration
+  - file: pairs-trading-backtest
+    title: 3 · Signals & Backtest
+  - file: pairs-trading-ml
+    title: 4 · Clustering, PCA & Prediction
+  - file: glossary
+    title: อภิธานศัพท์

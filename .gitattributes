@@ -1,0 +1,2 @@
+# Preserve the upstream KaTeX distribution verbatim, including generated whitespace.
+assets/katex/** -whitespace

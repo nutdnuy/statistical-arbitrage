@@ -1,0 +1,28 @@
+# แก้ชื่อเว็บและรูปด้านบนที่ไฟล์นี้ แล้วบันทึก
+# โครงสร้างไฟล์อิงแนวทาง Jupyter Book; เว็บนี้ใช้ตัวสร้างใน build.cjs
+
+title: Statistical Arbitrage
+author: Nuthdanai Wangpratham
+language: th
+logo: assets/images/quantcorner-horizontal-transparent-offwhite-1024.png
+logo_secondary: assets/images/quantsera-horizontal-transparent-offwhite-1024.png
+logo_alt: QuantCorner / Quantsera บนพื้นหลังสีดำ
+
+# ไฟล์สำหรับดาวน์โหลดจากแถบด้านข้าง
+notebook: notebooks/pairs-trading.ipynb
+
+# ลิงก์สำหรับเปิดไฟล์ต้นทางบน GitHub
+repository:
+  url: https://github.com/nutdnuy/statistical-arbitrage
+  branch: main
+
+# Public author profile and owner-supplied community links.
+author_profile:
+  name: Nuthdanai Wangpratham
+  label: ผู้เขียน · QuantCorner
+  bio: แบ่งปันความรู้ด้าน Quantitative Finance และ AI เพื่อให้การเรียนรู้เรื่องการลงทุนเริ่มต้นได้จากตัวอย่างที่ลองทำตามได้
+  linkedin: https://www.linkedin.com/in/nuthdanai-w/
+  website: https://www.quant-corner.com/
+  facebook: https://www.facebook.com/quantcornerthailand/
+  discord: https://discord.gg/ab7AvyGu5
+  portrait: assets/images/nuth-cartoon.png
