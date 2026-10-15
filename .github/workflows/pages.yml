@@ -26,6 +26,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build:pages
+      - name: Point migrated book pages to the main Library domain
+        run: python3 scripts/set-library-canonicals.py
+
       - uses: actions/upload-pages-artifact@v4
         if: github.event_name != 'pull_request'
         with:
